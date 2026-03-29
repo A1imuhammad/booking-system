@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "booking-system/protoс/gen/go/auth;auth";
+
+// The Auth service provides authentication and authorization functionality.
+// It allows users to register, log in, and check if they are an admin.
+service Auth {
+  // Registers a new user with the provided email and password
+  rpc Register (RegisterRequest) returns (RegisterResponse);
+  // Logs in a user with the provided email and password. 
+  rpc Login (LoginRequest) returns (LoginResponse);
+  //Checks if the user with the provided email is an admin.
+  rpc IsAdmin (IsAdminRequest) returns (IsAdminResponse);
+}
+
+message RegisterRequest {
+  string email    = 1; // Email of the user to register
+  string password = 2; // Password ot the user to register
+}
+
+message RegisterResponse {
+  int64 user_id = 1; // User ID of the register user
+}
+
+message LoginRequest {
+  string email    = 1; // Email of the user to login
+  string password = 2; // Password ot the user to login
+  int64  app_id   = 3; // ID of the app to login
+}
+
+message LoginResponse {
+  string token = 1; // Auth token to the logged user
+}
+
+message IsAdminRequest {
+    int64 user_id = 1; // User id to valodate
+}
+
+message IsAdminResponse {
+    bool is_admin = 1; // Indicated whether the user is an admin
+}
+
+

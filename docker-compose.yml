@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: playmeet_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: playmeet_db
+
+    ports:
+      - "5432:5432"            # проброс на локальный порт
+    volumes:
+      - playmeet_new_data:/var/lib/postgresql/data   # новый чистый volume
+
+volumes:
+  playmeet_new_data:
+
