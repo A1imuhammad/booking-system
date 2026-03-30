@@ -2,22 +2,58 @@ package main
 
 import (
 	"booking-system/services/auth/internal/config"
-	"fmt"
+	"log/slog"
+
+	"go.uber.org/zap"
+	slogzap "github.com/samber/slog-zap"
+)
+
+const (
+	EnvLocal = "local"
+	EnvDev   = "dev"
+	EnvProd  = "prod"
 )
 
 func main() {
-	// TODO: implement config
 	cfg := config.MustLoad()
-
-	fmt.Println(cfg)
-
-	// TODO: implement logger
-
+	
+	log := setupLogger(cfg.Env)
+	
+	log.Info("initial log")
+	log.Debug("debug log")
 	// TODO: implement server
 
 	// TODO: graceful shutdown
 }
 
-func setupLogger() {
-	// TODO: implement logger
+func setupLogger(env string) *slog.Logger {
+	var zapLogger *zap.Logger
+	var err error
+
+	switch env {
+	case EnvLocal:
+		zapLogger, err = zap.NewDevelopment()
+	case EnvDev:
+		zapLogger, err = zap.NewDevelopment()
+	case EnvProd:
+		zapLogger, err = zap.NewProduction()
+
+	default:
+		zapLogger, err = zap.NewProduction()
+	}
+
+	if err != nil {
+		panic(err)
+	}
+
+	handler := slogzap.Option{
+		Logger: zapLogger,
+		Level:  slog.LevelDebug,
+	}.NewZapHandler()
+
+	log := slog.New(handler).With(
+		slog.String("service", "auth"),
+	)
+
+	return log
 }
