@@ -18,9 +18,7 @@ func main() {
 	cfg := config.MustLoad()
 	
 	log := setupLogger(cfg.Env)
-	
-	log.Info("initial log")
-	log.Debug("debug log")
+	log.Info("starting application", slog.String("env", cfg.Env))	
 	// TODO: implement server
 
 	// TODO: graceful shutdown
