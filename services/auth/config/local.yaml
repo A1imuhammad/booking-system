@@ -1,0 +1,16 @@
+env: "local"
+
+jwt:
+  token_ttl: "1h"
+  token_secret: "secret"
+
+grpc:
+  port: 44041
+  timeout: 10s
+
+postgres:
+  postgres_user: root
+  postgres_password: 1234
+  postgres_port: 5432
+  postgres_db: auth_db
+  postgres_host: localhost 
