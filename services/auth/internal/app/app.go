@@ -19,7 +19,6 @@ func New(
 	jwt config.JWT,
 	gRPC config.GRPCConfig,
 ) *App {
-	// TODO: implement database
 	storage, err := storagepg .New(context.Background(),postgres)
 	if err != nil {
 		panic(err)
